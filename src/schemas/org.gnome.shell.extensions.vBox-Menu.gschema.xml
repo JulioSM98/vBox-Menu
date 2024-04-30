@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.vBox-Menu" path="/org/gnome/shell/extensions/vBox-Menu/">
+    <key name="detachable" type="b">
+      <default>false</default>
+      <summary>Start an detachable vm</summary>
+      <description>Start an detachable vm</description>
+    </key>
+    <key name="headless" type="b">
+      <default>false</default>
+      <summary>Start an headless vm</summary>
+      <description>Start an headless vm</description>
+    </key>
+  </schema>
+</schemalist>
