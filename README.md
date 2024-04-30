@@ -9,5 +9,5 @@ VM list populated after few seconds after extension is activated, to not slow do
 
 The extension checks if machines is running and mark items with dot shortly after popup becomes visible.
 
-![screenshot](screenshot.png?raw=true)
+![screenshot](new_screenshot.png?raw=true)
 
