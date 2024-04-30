@@ -1,29 +1,23 @@
-#=============================================================================
-UUID=$(shell cat src/metadata.json | python3 -c "import json,sys;obj=json.load(sys.stdin);print(obj['uuid']);")
-SRCDIR=src
-BUILDDIR=build
-FILES=metadata.json *.js stylesheet.css schemas icons
-MKFILE_PATH := $(lastword $(MAKEFILE_LIST))
-MKFILE_DIR := $(dir $(MKFILE_PATH))
-ABS_MKFILE_PATH := $(abspath $(MKFILE_PATH))
-ABS_MKFILE_DIR := $(abspath $(MKFILE_DIR))
-ABS_BUILDDIR=$(ABS_MKFILE_DIR)/$(BUILDDIR)
-#=============================================================================
-default_target: all
-.PHONY: clean all zip
+NAME=vBox-Menu
+DOMAIN=juliosejas98gmail.com
 
-clean:
-	rm -rf $(BUILDDIR)
-
-# compile the schemas
-all: clean
-	mkdir -p $(BUILDDIR)/$(UUID)
-	cp -r src/* $(BUILDDIR)/$(UUID)
-	@if [ -d $(BUILDDIR)/$(UUID)/schemas ]; then \
-		glib-compile-schemas $(BUILDDIR)/$(UUID)/schemas; \
+all: 
+	mkdir -p ./dist
+	cp -r src/* ./dist
+	@if [ -d ./dist/schemas ]; then \
+		glib-compile-schemas ./dist/schemas; \
 	fi
 
-zip: all
-	(cd $(BUILDDIR)/$(UUID); \
-         zip -rq $(ABS_BUILDDIR)/$(UUID).zip $(FILES:%=%); \
-        );
+
+$(NAME).zip: all
+	cd dist && zip ../$(NAME).zip -9r .
+
+pack: $(NAME).zip
+
+install: $(NAME).zip
+	@touch ~/.local/share/gnome-shell/extensions/$(NAME)@$(DOMAIN)
+	@rm -rf ~/.local/share/gnome-shell/extensions/$(NAME)@$(DOMAIN)
+	@mv dist ~/.local/share/gnome-shell/extensions/$(NAME)@$(DOMAIN)
+
+clean:
+	@rm -rf dist $(NAME).zip
